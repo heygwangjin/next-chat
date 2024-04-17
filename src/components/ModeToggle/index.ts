@@ -1,2 +1,2 @@
-export * from './ModeToggle';
-export { default } from './ModeToggle';
+export * from "./ModeToggle";
+export { default } from "./ModeToggle";
