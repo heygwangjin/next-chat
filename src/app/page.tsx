@@ -1,23 +1,16 @@
-import ModeToggle from '@/components/ModeToggle';
-import { Button } from "@/components/ui/button";
+import ChatHeader from "@/components/ChatHeader";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <main className="mx-auto h-screen max-w-3xl md:py-10">
       <div className="h-full rounded-md border">
-        <header className="flex h-20 items-center justify-between border-b p-4">
-          <div className="flex flex-col gap-1">
-            <h1 className="text-xl font-bold">Next Chat</h1>
-            <div className="flex items-center gap-1">
-              <span className="h-4 w-4 animate-pulse rounded-full bg-green-500" />
-              <h2 className="text-sm text-gray-600">2 onlines</h2>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button>Login</Button>
-            <ModeToggle/>
-          </div>
-        </header>
+        <ChatHeader user={user} />
       </div>
     </main>
   );
