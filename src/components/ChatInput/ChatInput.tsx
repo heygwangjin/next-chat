@@ -1,14 +1,14 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Imessage, useMessage } from '@/lib/store/messages';
-import { useUser } from '@/lib/store/user';
+import { Textarea } from "@/components/ui/textarea";
+import { Imessage, useMessage } from "@/lib/store/messages";
+import { useUser } from "@/lib/store/user";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 
 function ChatInput() {
-  const user  = useUser((state) => state.user);
+  const user = useUser((state) => state.user);
   const addMessage = useMessage((state) => state.addMessage);
 
   const supabase = createClient();
@@ -30,10 +30,10 @@ function ChatInput() {
         name: user?.user_metadata.name,
         avatar_url: user?.user_metadata.avatar_url,
         created_at: new Date().toISOString(),
-      }
-    }
+      },
+    };
 
-    addMessage(nextMessage as Imessage)
+    addMessage(nextMessage as Imessage);
 
     const { error } = await supabase.from("message").insert({ text });
 
@@ -44,10 +44,15 @@ function ChatInput() {
 
   return (
     <div className="p-4">
-      <Input
+      <Textarea
         placeholder="Type a message"
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
+        className="resize-none"
+        onKeyDownCapture={(event) => {
+          if (
+            event.key === "Enter" &&
+            event.nativeEvent.isComposing === false
+          ) {
+            event.preventDefault();
             handleSendMessage(event.currentTarget.value);
             event.currentTarget.value = "";
           }

@@ -21,5 +21,6 @@ interface MessageState {
 
 export const useMessage = create<MessageState>()((set) => ({
   messages: [],
-  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
 }));
