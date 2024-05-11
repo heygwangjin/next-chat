@@ -6,9 +6,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Imessage, useMessage } from "@/lib/store/messages";
 import { Ellipsis } from "lucide-react";
 
-function MessageMenu() {
+function MessageMenu({ message }: { message: Imessage }) {
+  const setActionMessage = useMessage((state) => state.setActionMessage);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -18,7 +21,14 @@ function MessageMenu() {
         <DropdownMenuLabel>Action</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            document.getElementById("delete-message")?.click();
+            setActionMessage(message);
+          }}
+        >
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

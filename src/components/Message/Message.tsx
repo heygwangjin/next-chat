@@ -1,7 +1,7 @@
 import { Imessage } from "@/lib/store/messages";
+import { useUser } from "@/lib/store/user";
 import Image from "next/image";
 import MessageMenu from "../MessageMenu";
-import { useUser } from '@/lib/store/user';
 
 function Message({ message }: { message: Imessage }) {
   const user = useUser((state) => state.user);
@@ -25,7 +25,7 @@ function Message({ message }: { message: Imessage }) {
               {new Date(message.created_at).toLocaleDateString()}
             </span>
           </div>
-          {user?.id === message.user?.id && <MessageMenu />}
+          {user?.id === message.user?.id && <MessageMenu message={message} />}
         </div>
         <p>{message.text}</p>
       </div>

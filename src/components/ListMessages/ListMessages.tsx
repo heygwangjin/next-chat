@@ -1,6 +1,7 @@
 "use client";
 
 import { useMessage } from "@/lib/store/messages";
+import AlertDeleteMessage from "../AlertDeleteMessage";
 import Message from "../Message";
 
 function ListMessages() {
@@ -14,6 +15,7 @@ function ListMessages() {
           return <Message key={message.id} message={message} />;
         })}
       </div>
+      <AlertDeleteMessage />
     </div>
   );
 }
