@@ -1,7 +1,11 @@
 import { Imessage } from "@/lib/store/messages";
 import Image from "next/image";
+import MessageMenu from "../MessageMenu";
+import { useUser } from '@/lib/store/user';
 
 function Message({ message }: { message: Imessage }) {
+  const user = useUser((state) => state.user);
+
   return (
     <div className="flex gap-2">
       <div>
@@ -14,11 +18,14 @@ function Message({ message }: { message: Imessage }) {
         />
       </div>
       <div className="flex-1">
-        <div className="flex items-center gap-1.5">
-          <h1 className="font-bold">{message.user?.name}</h1>
-          <span className="text-sm text-gray-400">
-            {new Date(message.created_at).toLocaleDateString()}
-          </span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <h1 className="font-bold">{message.user?.name}</h1>
+            <span className="text-sm text-gray-400">
+              {new Date(message.created_at).toLocaleDateString()}
+            </span>
+          </div>
+          {user?.id === message.user?.id && <MessageMenu />}
         </div>
         <p>{message.text}</p>
       </div>
