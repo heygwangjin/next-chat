@@ -8,7 +8,8 @@ async function ChatMessages() {
 
   const { data: messages, error } = await supabase
     .from("message")
-    .select("*, user(*)");
+    .select("*, user(*)")
+    .order("created_at", { ascending: true });
 
   if (error) {
     return <div>Error loading messages</div>;

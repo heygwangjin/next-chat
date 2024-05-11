@@ -24,6 +24,9 @@ function Message({ message }: { message: Imessage }) {
             <span className="text-sm text-gray-400">
               {new Date(message.created_at).toLocaleDateString()}
             </span>
+            {message.is_edit && (
+              <span className="text-sm text-gray-400">(edited)</span>
+            )}
           </div>
           {user?.id === message.user?.id && <MessageMenu message={message} />}
         </div>

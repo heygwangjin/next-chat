@@ -2,6 +2,7 @@
 
 import { useMessage } from "@/lib/store/messages";
 import AlertDeleteMessage from "../AlertDeleteMessage";
+import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";
 
 function ListMessages() {
@@ -16,6 +17,7 @@ function ListMessages() {
         })}
       </div>
       <AlertDeleteMessage />
+      <AlertEditMessage />
     </div>
   );
 }

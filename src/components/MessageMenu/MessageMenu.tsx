@@ -20,7 +20,14 @@ function MessageMenu({ message }: { message: Imessage }) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Action</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            document.getElementById("edit-message")?.click();
+            setActionMessage(message);
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             document.getElementById("delete-message")?.click();
