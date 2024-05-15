@@ -1,9 +1,9 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { Imessage, useMessage } from "@/lib/store/messages";
-import { useUser } from "@/lib/store/user";
-import { createClient } from "@/lib/supabase/client";
+import { Imessage, useMessage } from "@/stores/messages";
+import { useUser } from "@/stores/user";
+import { createClient } from "@/supabase/client";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 

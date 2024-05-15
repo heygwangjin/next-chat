@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Imessage, useMessage } from "@/lib/store/messages";
-import { createClient } from "@/lib/supabase/client";
+import { Imessage, useMessage } from "@/stores/messages";
+import { createClient } from "@/supabase/client";
 import React from "react";
 import { toast } from "sonner";
 

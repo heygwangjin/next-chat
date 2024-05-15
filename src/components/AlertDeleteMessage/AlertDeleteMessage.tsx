@@ -11,8 +11,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useMessage } from "@/lib/store/messages";
-import { createClient } from "@/lib/supabase/client";
+import { useMessage } from "@/stores/messages";
+import { createClient } from "@/supabase/client";
 import { toast } from "sonner";
 
 function AlertDeleteMessage() {

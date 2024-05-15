@@ -2,7 +2,7 @@
 
 import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMessage } from "@/lib/store/messages";
+import { useMessage } from "@/stores/messages";
 import AlertDeleteMessage from "../AlertDeleteMessage";
 import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";

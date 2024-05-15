@@ -1,6 +1,6 @@
 "use client";
 
-import { Imessage, useMessage } from "@/lib/store/messages";
+import { Imessage, useMessage } from "@/stores/messages";
 import React from "react";
 
 function InitMessages({ messages }: { messages: Imessage[] | [] }) {

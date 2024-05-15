@@ -1,5 +1,5 @@
-import { Imessage } from "@/lib/store/messages";
-import { useUser } from "@/lib/store/user";
+import { Imessage } from "@/stores/messages";
+import { useUser } from "@/stores/user";
 import Image from "next/image";
 import MessageMenu from "./MessageMenu";
 

@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Imessage, useMessage } from "@/lib/store/messages";
+import { Imessage, useMessage } from "@/stores/messages";
 import { Ellipsis } from "lucide-react";
 
 function MessageMenu({ message }: { message: Imessage }) {

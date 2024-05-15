@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/lib/store/user";
+import { useUser } from "@/stores/user";
 import { User } from "@supabase/supabase-js";
 import React from "react";
 

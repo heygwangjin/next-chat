@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/supabase/server";
 import { Suspense } from "react";
 import InitMessages from "../InitMessages";
 import ListMessages from "../ListMessages";
