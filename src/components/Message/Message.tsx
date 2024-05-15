@@ -1,7 +1,7 @@
 import { Imessage } from "@/lib/store/messages";
 import { useUser } from "@/lib/store/user";
 import Image from "next/image";
-import MessageMenu from "../MessageMenu";
+import MessageMenu from "./MessageMenu";
 
 function Message({ message }: { message: Imessage }) {
   const user = useUser((state) => state.user);
