@@ -1,6 +1,6 @@
 "use client";
 
-import ModeToggle from "@/components/ModeToggle";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
@@ -45,7 +45,7 @@ function ChatHeader({ user }: { user: User | null }) {
         ) : (
           <Button onClick={handleLoginWithGithub}>Login</Button>
         )}
-        <ModeToggle />
+        <ThemeToggle />
       </div>
     </header>
   );
