@@ -65,6 +65,7 @@ function AlertEditMessage() {
           ref={inputRef}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
+              event.stopPropagation();
               handleEditMessage();
             }
           }}
