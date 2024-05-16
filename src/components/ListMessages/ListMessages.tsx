@@ -11,7 +11,8 @@ import Message from "../Message";
 function ListMessages() {
   const scrollRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  const { messages, addMessage, optimisticIds } = useMessage((state) => state);
+  const { messages, optimisticIds, addMessage, optimisticDeleteMessage } =
+    useMessage((state) => state);
   const supabase = createClient();
 
   React.useEffect(() => {
@@ -42,6 +43,13 @@ function ListMessages() {
           };
 
           addMessage(nextMessage as Imessage);
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "message" },
+        (payload) => {
+          optimisticDeleteMessage(payload.old.id);
         },
       )
       .subscribe();
