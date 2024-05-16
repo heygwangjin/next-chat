@@ -19,8 +19,9 @@ function ChatInput() {
       return;
     }
 
+    const id = uuidv4();
     const nextMessage = {
-      id: uuidv4(),
+      id,
       text,
       user_id: user?.id,
       is_edit: false,
@@ -36,7 +37,7 @@ function ChatInput() {
     addMessage(nextMessage as Imessage);
     setOptimisticIds(nextMessage.id);
 
-    const { error } = await supabase.from("message").insert({ text });
+    const { error } = await supabase.from("message").insert({ id, text });
 
     if (error) {
       toast.error(error.message);
