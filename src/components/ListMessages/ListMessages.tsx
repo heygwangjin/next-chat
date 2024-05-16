@@ -9,6 +9,8 @@ import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";
 
 function ListMessages() {
+  const scrollRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+
   const { messages, addMessage, optimisticIds } = useMessage((state) => state);
   const supabase = createClient();
 
@@ -49,8 +51,16 @@ function ListMessages() {
     };
   }, [messages]);
 
+  React.useEffect(() => {
+    const scrollContainer = scrollRef.current;
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto p-4">
+    <div className="flex flex-1 flex-col overflow-y-auto p-4" ref={scrollRef}>
       <div className="flex-1"></div>
       <div className="space-y-6">
         {messages.map((message) => {
