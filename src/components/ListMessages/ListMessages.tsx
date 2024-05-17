@@ -2,14 +2,17 @@
 
 import { Imessage, useMessage } from "@/stores/messages";
 import { createClient } from "@/supabase/client";
+import { ArrowDown } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 import AlertDeleteMessage from "../AlertDeleteMessage";
 import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";
+import { Button } from "../ui/button";
 
 function ListMessages() {
   const scrollRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+  const [userScrolled, setUserScrolled] = React.useState(false);
 
   const {
     messages,
@@ -79,14 +82,47 @@ function ListMessages() {
     }
   }, [messages]);
 
+  const handleOnScroll = () => {
+    const scrollContainer = scrollRef.current;
+
+    if (!scrollContainer) {
+      return;
+    }
+
+    const isScroll =
+      scrollContainer.scrollTop <
+      scrollContainer.scrollHeight - scrollContainer.clientHeight - 10;
+
+    setUserScrolled(isScroll);
+  };
+
+  const scrollDown = () => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  };
+
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto p-4" ref={scrollRef}>
+    <div
+      className="flex flex-1 flex-col overflow-y-auto"
+      ref={scrollRef}
+      onScroll={handleOnScroll}
+    >
       <div className="flex-1"></div>
-      <div className="space-y-6">
+      <div className="space-y-6 p-4">
         {messages.map((message) => {
           return <Message key={message.id} message={message} />;
         })}
       </div>
+      {userScrolled && (
+        <div className="absolute bottom-28 z-10 w-full">
+          <Button
+            className="mx-auto flex h-10 w-10 animate-bounce items-center justify-center rounded-full p-0 dark:text-white"
+            onClick={scrollDown}
+          >
+            <ArrowDown />
+          </Button>
+        </div>
+      )}
+
       <AlertDeleteMessage />
       <AlertEditMessage />
     </div>

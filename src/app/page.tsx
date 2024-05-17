@@ -13,7 +13,7 @@ export default async function Page() {
   return (
     <>
       <main className="mx-auto h-screen max-w-3xl md:py-10">
-        <div className="flex h-full flex-col rounded-md border">
+        <div className="relative flex h-full flex-col rounded-md border">
           <ChatHeader user={user} />
           {user ? <ChatMessages /> : <div>hehe</div>}
           <ChatInput />
