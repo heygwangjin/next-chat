@@ -128,7 +128,7 @@ function ListMessages() {
 
   return (
     <div
-      className="flex flex-1 flex-col overflow-y-auto"
+      className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
       ref={scrollRef}
       onScroll={handleOnScroll}
     >

@@ -13,11 +13,11 @@ function Message({ message }: { message: Imessage }) {
           src={message.user?.avatar_url!}
           width={40}
           height={40}
-          className="rounded-full ring-2 dark:ring-white"
+          className="rounded-full ring-2 dark:ring-white min-w-10 min-h-10"
           alt={message.user?.name!}
         />
       </div>
-      <div className="flex-1">
+      <div className="w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <h1 className="font-bold">{message.user?.name}</h1>
@@ -30,7 +30,7 @@ function Message({ message }: { message: Imessage }) {
           </div>
           {user?.id === message.user?.id && <MessageMenu message={message} />}
         </div>
-        <p>{message.text}</p>
+        <p className="break-words max-w-2xl whitespace-pre-wrap mt-2">{message.text}</p>
       </div>
     </div>
   );
