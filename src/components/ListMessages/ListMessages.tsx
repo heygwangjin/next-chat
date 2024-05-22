@@ -1,19 +1,20 @@
 "use client";
 
 import { Imessage, useMessage } from "@/stores/messages";
+import { useUser } from "@/stores/user";
 import { createClient } from "@/supabase/client";
 import { ArrowDown } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 import { toast } from "sonner";
 import AlertDeleteMessage from "../AlertDeleteMessage";
 import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";
 import { Button } from "../ui/button";
-import { useUser } from '@/stores/user';
 
 function ListMessages() {
   const [userScrolled, setUserScrolled] = React.useState(false);
-  const [notification, setNotification] = React.useState(0);
+  const [lastMessage, setLastMessage] = React.useState<Imessage | null>(null);
   const user = useUser((state) => state.user);
   const {
     messages,
@@ -34,15 +35,6 @@ function ListMessages() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "message" },
         async (payload) => {
-          const scrollContainer = scrollRef.current;
-
-          if (
-            scrollContainer.scrollTop <
-            scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
-          ) {
-            setNotification((prev) => prev + 1);
-          }
-
           if (optimisticIds.includes(payload.new.id)) {
             return;
           }
@@ -64,6 +56,15 @@ function ListMessages() {
           };
 
           addMessage(nextMessage as Imessage);
+
+          const scrollContainer = scrollRef.current;
+
+          if (
+            scrollContainer.scrollTop <
+            scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
+          ) {
+            setLastMessage(nextMessage as Imessage);
+          }
         },
       )
       .on(
@@ -113,7 +114,7 @@ function ListMessages() {
       scrollContainer.scrollHeight - scrollContainer.clientHeight - 10;
 
     if (!isScroll) {
-      setNotification(0);
+      setLastMessage(null);
     }
 
     setUserScrolled(isScroll);
@@ -121,7 +122,7 @@ function ListMessages() {
 
   const scrollDown = () => {
     setUserScrolled(false);
-    setNotification(0);
+    setLastMessage(null);
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   };
 
@@ -138,13 +139,21 @@ function ListMessages() {
         })}
       </div>
       {userScrolled && (
-        <div className="absolute bottom-28 z-10 w-full">
-          {notification ? (
+        <div className="absolute bottom-28 z-10 w-full px-20">
+          {lastMessage ? (
             <Button
-              className="mx-auto flex animate-bounce items-center justify-center dark:text-white"
+              className="mx-auto flex max-w-full animate-bounce items-center gap-2 rounded-xl px-2 dark:text-white"
               onClick={scrollDown}
             >
-              {notification} new messages
+              <Image
+                src={lastMessage.user?.avatar_url!}
+                width={28}
+                height={28}
+                className="rounded-lg"
+                alt={lastMessage.user?.name!}
+              />
+              <h1>{lastMessage.user?.name}</h1>
+              <p className="truncate">{lastMessage.text}</p>
             </Button>
           ) : (
             <Button

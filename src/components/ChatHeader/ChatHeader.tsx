@@ -41,9 +41,13 @@ function ChatHeader({ user }: { user: User | null }) {
       </div>
       <div className="flex items-center gap-2">
         {user ? (
-          <Button className="dark:text-white" onClick={handleLogout}>Logout</Button>
+          <Button className="dark:text-white" onClick={handleLogout}>
+            Logout
+          </Button>
         ) : (
-          <Button className="dark:text-white" onClick={handleLoginWithGithub}>Login</Button>
+          <Button className="dark:text-white" onClick={handleLoginWithGithub}>
+            Login
+          </Button>
         )}
         <ThemeToggle />
       </div>
