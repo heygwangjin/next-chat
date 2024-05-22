@@ -11,9 +11,8 @@ import Message from "../Message";
 import { Button } from "../ui/button";
 
 function ListMessages() {
-  const scrollRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
   const [userScrolled, setUserScrolled] = React.useState(false);
-
+  const [notification, setNotification] = React.useState(0);
   const {
     messages,
     optimisticIds,
@@ -21,6 +20,9 @@ function ListMessages() {
     optimisticDeleteMessage,
     optimisticEditMessage,
   } = useMessage((state) => state);
+
+  const scrollRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+
   const supabase = createClient();
 
   React.useEffect(() => {
@@ -30,6 +32,15 @@ function ListMessages() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "message" },
         async (payload) => {
+          const scrollContainer = scrollRef.current;
+
+          if (
+            scrollContainer.scrollTop <
+            scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
+          ) {
+            setNotification((prev) => prev + 1);
+          }
+
           if (optimisticIds.includes(payload.new.id)) {
             return;
           }
@@ -77,7 +88,7 @@ function ListMessages() {
   React.useEffect(() => {
     const scrollContainer = scrollRef.current;
 
-    if (scrollContainer) {
+    if (scrollContainer && !userScrolled) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
   }, [messages]);
@@ -93,10 +104,16 @@ function ListMessages() {
       scrollContainer.scrollTop <
       scrollContainer.scrollHeight - scrollContainer.clientHeight - 10;
 
+    if (!isScroll) {
+      setNotification(0);
+    }
+
     setUserScrolled(isScroll);
   };
 
   const scrollDown = () => {
+    setUserScrolled(false);
+    setNotification(0);
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   };
 
@@ -114,12 +131,21 @@ function ListMessages() {
       </div>
       {userScrolled && (
         <div className="absolute bottom-28 z-10 w-full">
-          <Button
-            className="mx-auto flex h-10 w-10 animate-bounce items-center justify-center rounded-full p-0 dark:text-white"
-            onClick={scrollDown}
-          >
-            <ArrowDown />
-          </Button>
+          {notification ? (
+            <Button
+              className="mx-auto flex animate-bounce items-center justify-center dark:text-white"
+              onClick={scrollDown}
+            >
+              {notification} new messages
+            </Button>
+          ) : (
+            <Button
+              className="mx-auto flex h-10 w-10 animate-bounce items-center justify-center rounded-full p-0 dark:text-white"
+              onClick={scrollDown}
+            >
+              <ArrowDown />
+            </Button>
+          )}
         </div>
       )}
 
