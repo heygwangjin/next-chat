@@ -28,7 +28,7 @@ function ChatInput() {
       created_at: new Date().toISOString(),
       user: {
         id: user?.id,
-        name: user?.user_metadata.name,
+        name: user?.user_metadata.user_name,
         avatar_url: user?.user_metadata.avatar_url,
         created_at: new Date().toISOString(),
       },
