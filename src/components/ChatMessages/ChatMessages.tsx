@@ -9,7 +9,7 @@ async function ChatMessages() {
   const { data: messages, error } = await supabase
     .from("message")
     .select("*, user(*)")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: false });
 
   if (error) {
     return <div>Error loading messages</div>;
@@ -18,7 +18,7 @@ async function ChatMessages() {
   return (
     <Suspense fallback={"Loading messages..."}>
       <ListMessages />
-      <InitMessages messages={messages} />
+      <InitMessages messages={messages.reverse()} />
     </Suspense>
   );
 }
