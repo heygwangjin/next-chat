@@ -30,7 +30,7 @@ function Message({ message }: { message: Imessage }) {
           </div>
           {user?.id === message.user?.id && <MessageMenu message={message} />}
         </div>
-        <p className="break-words max-w-2xl whitespace-pre-wrap mt-2">{message.text}</p>
+        <p className="break-words max-w-2xl whitespace-pre-wrap mt-1">{message.text}</p>
       </div>
     </div>
   );

@@ -51,6 +51,7 @@ function ChatInput() {
         className="resize-none"
         onKeyDownCapture={(event) => {
           if (
+            !event.shiftKey &&
             event.key === "Enter" &&
             event.nativeEvent.isComposing === false
           ) {
