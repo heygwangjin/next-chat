@@ -9,10 +9,12 @@ import AlertDeleteMessage from "../AlertDeleteMessage";
 import AlertEditMessage from "../AlertEditMessage";
 import Message from "../Message";
 import { Button } from "../ui/button";
+import { useUser } from '@/stores/user';
 
 function ListMessages() {
   const [userScrolled, setUserScrolled] = React.useState(false);
   const [notification, setNotification] = React.useState(0);
+  const user = useUser((state) => state.user);
   const {
     messages,
     optimisticIds,
@@ -88,6 +90,12 @@ function ListMessages() {
   React.useEffect(() => {
     const scrollContainer = scrollRef.current;
 
+    // 가장 최근 메시지가 내가 보낸 메시지일 경우 스크롤을 가장 아래로 내린다.
+    if (messages.length && messages[messages.length - 1].user_id === user?.id) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
+
+    // 초기 메시지 로딩 시 스크롤을 가장 아래로 내린다
     if (scrollContainer && !userScrolled) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
