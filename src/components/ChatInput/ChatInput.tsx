@@ -9,7 +9,9 @@ import { v4 as uuidv4 } from "uuid";
 
 function ChatInput() {
   const user = useUser((state) => state.user);
-  const { addMessage, setOptimisticIds } = useMessage((state) => state);
+  const { setIsClickedLoadMore, addMessage, setOptimisticIds } = useMessage(
+    (state) => state,
+  );
 
   const supabase = createClient();
 
@@ -36,6 +38,7 @@ function ChatInput() {
 
     addMessage(nextMessage as Imessage);
     setOptimisticIds(nextMessage.id);
+    setIsClickedLoadMore(false);
 
     const { error } = await supabase.from("message").insert({ id, text });
 

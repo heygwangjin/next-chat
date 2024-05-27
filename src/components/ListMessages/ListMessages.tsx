@@ -9,6 +9,7 @@ import React from "react";
 import { toast } from "sonner";
 import AlertDeleteMessage from "../AlertDeleteMessage";
 import AlertEditMessage from "../AlertEditMessage";
+import LoadMoreMessages from "../LoadMoreMessages";
 import Message from "../Message";
 import { Button } from "../ui/button";
 
@@ -17,6 +18,7 @@ function ListMessages() {
   const [lastMessage, setLastMessage] = React.useState<Imessage | null>(null);
   const user = useUser((state) => state.user);
   const {
+    isClickedLoadMore,
     messages,
     optimisticIds,
     addMessage,
@@ -92,7 +94,11 @@ function ListMessages() {
     const scrollContainer = scrollRef.current;
 
     // 가장 최근 메시지가 내가 보낸 메시지일 경우 스크롤을 가장 아래로 내린다.
-    if (messages.length && messages[messages.length - 1].user_id === user?.id) {
+    if (
+      messages.length &&
+      messages[messages.length - 1].user_id === user?.id &&
+      !isClickedLoadMore
+    ) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
 
@@ -132,7 +138,9 @@ function ListMessages() {
       ref={scrollRef}
       onScroll={handleOnScroll}
     >
-      <div className="flex-1"></div>
+      <div className="flex-1 p-4 pb-0">
+        <LoadMoreMessages />
+      </div>
       <div className="space-y-6 p-4">
         {messages.map((message) => {
           return <Message key={message.id} message={message} />;
