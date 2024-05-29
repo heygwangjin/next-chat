@@ -1,1 +1,1 @@
-export const LIMIT_MESSAGES = 10;
+export const LIMIT_MESSAGES = 20;
