@@ -45,7 +45,14 @@ export const useMessage = create<MessageState>()((set) => ({
     set((state) => ({ optimisticIds: [...state.optimisticIds, id] })),
   setMessages: (newMessages) =>
     set((state) => ({
-      messages: [...newMessages, ...state.messages],
+      messages: [
+        // Remove duplicates
+        ...newMessages.filter(
+          (newMsg) =>
+            !state.messages.some((oldMsg) => oldMsg.id === newMsg.id),
+        ),
+        ...state.messages,
+      ],
       page: state.page + 1,
       hasMore: newMessages.length >= LIMIT_MESSAGES,
     })),

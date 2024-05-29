@@ -31,7 +31,7 @@ function LoadMoreMessages() {
 
     if (data.length === 0) {
       setMessages([]);
-      toast.info("No more messages")
+      toast.info("No more messages");
       return;
     }
 
