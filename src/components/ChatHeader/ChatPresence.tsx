@@ -25,7 +25,6 @@ function ChatPresence() {
             // @ts-ignore
             userIds.add(channel.presenceState()[id][0].user_id);
           }
-
         }
 
         setNumOnlineUsers(userIds.size);
