@@ -48,8 +48,7 @@ export const useMessage = create<MessageState>()((set) => ({
       messages: [
         // Remove duplicates
         ...newMessages.filter(
-          (newMsg) =>
-            !state.messages.some((oldMsg) => oldMsg.id === newMsg.id),
+          (newMsg) => !state.messages.some((oldMsg) => oldMsg.id === newMsg.id),
         ),
         ...state.messages,
       ],
